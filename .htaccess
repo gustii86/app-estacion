@@ -1,0 +1,14 @@
+RewriteEngine On
+
+# Bloquea el acceso directo a las carpetas internas
+RewriteRule ^(core|controllers|models|views)/ - [F,L]
+
+# Todo lo que no sea un archivo/carpeta real pasa por el router
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+
+# Nunca servir env.php
+<Files "env.php">
+    Require all denied
+</Files>
